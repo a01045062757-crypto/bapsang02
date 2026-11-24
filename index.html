@@ -52,13 +52,12 @@
 
     /* 둥근 소반 */
     .table {
+      position: relative;
+      flex-shrink: 0;
       width: min(90vw, 560px);
-      aspect-ratio: 1 / 1;
+      height: min(90vw, 560px);
+      container-type: size;   /* 카드 크기를 상 크기에 맞춤 */
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12%;
       background:
         radial-gradient(circle at 35% 30%, var(--table-light), var(--table) 55%, var(--table-dark));
       border: 14px solid var(--table-dark);
@@ -69,39 +68,49 @@
     }
 
     /* 반찬 목록 */
+    /* 반찬 목록: 상 위에 동그랗게 둘러놓기 (--n, --i는 아래 스크립트가 채움) */
     .dishes {
       list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      align-content: center;
-      gap: 14px;
+      position: absolute;
+      inset: 0;
     }
 
     .dishes li {
-      width: 108px;
-      padding: 16px 8px 14px;
+      --w: min(19cqw, calc(150cqw / var(--n, 1)));   /* 반찬이 많아지면 카드가 작아짐 */
+      --angle: calc(360deg / var(--n, 1) * var(--i, 0));
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: var(--w);
+      padding: calc(var(--w) * 0.14) calc(var(--w) * 0.06);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: calc(var(--w) * 0.07);
       background: var(--card);
       border: 2px solid var(--card-edge);
-      border-radius: 18px;
+      border-radius: calc(var(--w) * 0.17);
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-      font-size: 1.05rem;
+      font-size: calc(var(--w) * 0.15);
       font-weight: 700;
       text-align: center;
-      transition: transform 0.2s ease;
+      white-space: nowrap;
+      transform:
+        translate(-50%, -50%)
+        rotate(var(--angle))
+        translateY(-31cqw)
+        rotate(calc(-1 * var(--angle)));
+      transition: scale 0.2s ease;
     }
 
-    .dishes li:hover { transform: translateY(-4px) rotate(-2deg); }
+    .dishes li:only-child { transform: translate(-50%, -50%); }
+
+    .dishes li:hover { scale: 1.08; }
 
     /* data-emoji 값을 카드 위쪽에 크게 표시 */
     .dishes li::before {
       content: attr(data-emoji);
-      font-size: 2.6rem;
+      font-size: calc(var(--w) * 0.38);
       line-height: 1;
     }
 
@@ -124,9 +133,19 @@
       <li data-emoji="🍲">국</li>
       <li data-emoji="🥬">김치</li>
       <li data-emoji="🍖">꼬리곰탕</li>
+      <li data-emoji="🦞">랍스타</li>
     </ul>
   </main>
 
   <footer>맛있게 드세요 🙏</footer>
+
+  <script>
+    // 반찬 개수와 순서를 CSS에 알려줘서 상 위에 동그랗게 배치
+    const dishes = document.querySelectorAll('.dishes li');
+    dishes.forEach((li, i) => {
+      li.style.setProperty('--n', dishes.length);
+      li.style.setProperty('--i', i);
+    });
+  </script>
 </body>
 </html>
