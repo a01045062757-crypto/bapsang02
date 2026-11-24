@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>오늘의 밥상</title>
+  <style>
+    :root {
+      --bg: #f6ecd9;          /* 한지 느낌 바탕 */
+      --bg-pattern: #efe0c4;
+      --ink: #3b2418;         /* 먹색에 가까운 갈색 */
+      --accent: #b5452f;      /* 단청 붉은색 */
+      --table: #8a4b2a;       /* 소반 나무색 */
+      --table-dark: #5e3119;
+      --table-light: #a8623a;
+      --card: #fffaf0;
+      --card-edge: #e6d3b0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      padding: 40px 16px;
+      font-family: "Noto Serif KR", "Nanum Myeongjo", "Batang", serif;
+      color: var(--ink);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 20% 20%, var(--bg-pattern) 0 2px, transparent 3px),
+        radial-gradient(circle at 70% 60%, var(--bg-pattern) 0 2px, transparent 3px);
+      background-size: 48px 48px;
+    }
+
+    header { text-align: center; }
+
+    h1 {
+      font-size: clamp(2rem, 6vw, 3rem);
+      letter-spacing: 0.15em;
+      color: var(--accent);
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      font-size: 1rem;
+      opacity: 0.75;
+    }
+
+    /* 둥근 소반 */
+    .table {
+      width: min(90vw, 560px);
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12%;
+      background:
+        radial-gradient(circle at 35% 30%, var(--table-light), var(--table) 55%, var(--table-dark));
+      border: 14px solid var(--table-dark);
+      box-shadow:
+        0 24px 40px rgba(59, 36, 24, 0.35),
+        inset 0 0 0 4px rgba(255, 255, 255, 0.08),
+        inset 0 -12px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    /* 반찬 목록 */
+    .dishes {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      align-content: center;
+      gap: 14px;
+    }
+
+    .dishes li {
+      width: 108px;
+      padding: 16px 8px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      background: var(--card);
+      border: 2px solid var(--card-edge);
+      border-radius: 18px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .dishes li:hover { transform: translateY(-4px) rotate(-2deg); }
+
+    /* data-emoji 값을 카드 위쪽에 크게 표시 */
+    .dishes li::before {
+      content: attr(data-emoji);
+      font-size: 2.6rem;
+      line-height: 1;
+    }
+
+    footer {
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>오늘의 밥상</h1>
+    <p class="subtitle">따끈한 밥 한 공기, 잘 먹겠습니다</p>
+  </header>
+
+  <main class="table">
+    <ul class="dishes">
+      <!-- 반찬을 추가하려면 아래에 한 줄씩 넣으세요: <li data-emoji="이모지">이름</li> -->
+      <li data-emoji="🍚">밥</li>
+      <li data-emoji="🍲">국</li>
+      <li data-emoji="🥬">김치</li>
+    </ul>
+  </main>
+
+  <footer>맛있게 드세요 🙏</footer>
+</body>
+</html>
